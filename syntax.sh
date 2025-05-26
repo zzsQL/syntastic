@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE="syntax.txt"  # Change this to your real filename
+FILE="syntax.txt"  # Change this to your real filename. Be sure it's in your pwd. 
 
 if [ ! -f "$FILE" ]; then
     echo "Error: File '$FILE' not found."
@@ -10,7 +10,7 @@ fi
 RED=$'\033[0;31m'
 NC=$'\033[0m'
 
-echo "🔎 Interactive AND-Search on $FILE (type 'q' to quit)"
+echo "Interactive AND-Search on $FILE (type 'q' to quit)"
 
 while true; do
     echo -n "Enter one or more words to search: "
@@ -44,4 +44,3 @@ while true; do
 
     echo "----------------------------------"
 done
-
