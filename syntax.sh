@@ -1,5 +1,5 @@
 #!/bin/bash
-
+dos2unix syntax.sh > /dev/null 2>&1
 FILE="syntax.txt"  # Change this to your real filename. Be sure it's in your pwd. 
 
 if [ ! -f "$FILE" ]; then
