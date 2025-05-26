@@ -1,6 +1,6 @@
 #!/bin/bash
 FILE="syntax.txt"  # Change this to your real filename. Be sure it's in your pwd. 
-
+    echo "Enter one or more search terms like 'hydra rdp', 'nmap dhcp script' or 'medusa ftp' to find specific commands."
 if [ ! -f "$FILE" ]; then
     echo "Error: File '$FILE' not found."
     exit 1
