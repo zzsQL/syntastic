@@ -9,7 +9,7 @@ This little system involves two files:
 Just run this in the git dir:
 dos2unix syntastic.sh
 chmod +x syntastic.sh
-./syntax.sh to start the script. 
+./syntastic.sh to start the script. 
 
 The syntax.txt file is indeed a mess but it is also full of really useful information for interacting with a Linux or Unix system.
 The beautify of it is, you can very quickly find exactly the command syntax you want without having to dig through and study poorly-written and boring documents. 
