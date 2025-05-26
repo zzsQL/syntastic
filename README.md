@@ -3,7 +3,7 @@ A simple lookup tool to that simplifies finding command syntax that doesn't invo
 
 This little system involves two files:
 1. A bash script (syntastic.sh) that parses the main file for command syntax. Enter whichever terms you want like "hydra ssh" to see the syntax for brute forcing an ssh server or the syntax for ffuf.
-2. The main file (syntax.txt) is a repo of nearly 6,000 lines of command syntax, http or ftp op codes, port assignments, ip addressing, Linux commands and other miscellaneous Linux usage information.
+2. The main file (syntax.txt) is a repo of nearly 6,000 lines of command syntax, http or ftp op codes, port assignments, ip addressing, Linux commands and other miscellaneous Linux usage information. 
 
 !! You may need to run dos2unix syntax.sh because of how github mangles end of line characters.
 Just run this in the git dir:
