@@ -11,12 +11,29 @@ dig +dnssec www.iana.org
 export ip=192.168.1.100 - then call with ping $ip
 ln -s /home/loki/syntax.txt /bin/syntax.txt - this way I can reference syntax.txt where I am in the system. 
 arp -a or ip neigh to see nearby mac addresses or detect problems
-arp-scan -I eth0 --plain --format='${ip},${mac},"${vendor}"' 10.0.0.0/24 wow. awesome. 
+arp-scan -I eth0 --plain --format='${ip},${mac},"${vendor}"' 10.0.0.0/24 awesome
 xdg-open skipfish.out/index.html Opens the html in the default browser
 wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
+delete keys with gpg --delete-key and gpg --delete-secret-key
+gpg --full-generate-key
+gpg --list-keys
+gpg --list-secret-keys
+gpg --armor --export [your\_email@example.com](mailto:your_email@example.com) > publickey.asc
+gpg --import publickey.asc
+gpg --encrypt --recipient [recipient\_email@example.com](mailto:recipient_email@example.com) file.txt
+gpg --output file.txt --decrypt file.txt.gpg
+gpg --symmetric file.txt
+gpg --output file.txt --decrypt file.txt.gpg
+gpg --clearsign file.txt
+gpg --verify file.txt.asc
+gpg --encrypt --sign --recipient [recipient\_email@example.com](mailto:recipient_email@example.com) file.txt
+gpg --output file.txt --decrypt file.txt.gpg
+* You must trust the public key you import. Use gpg --edit-key and the trust command to set the trust level.
+* You can delete keys with gpg --delete-key and gpg --delete-secret-key.
+
 ss -tulnp - tcpview for linux like netstat (deprecated) and socket status ss
 ntpdate time.google.com
-resolvctl monitor to watch real-time dns queries
+resolvectl monitor to watch real-time dns queries
 resolvectl status
 resolvectl query example.com
 resolvectl query -t MX microsoft.com
@@ -79,10 +96,169 @@ alias l='ls -CF'
 alias t='tree'
 alias dir='ls --color=auto'
 
+
+
+
+kali: nmap - Network scanner (already covered)
+kali: hydra - Login brute-force tool (already covered)
+kali: medusa - Parallel brute-force login tool (already covered)
+kali: ffuf - Web fuzzing tool (already covered)
+kali: burpsuite - Web vulnerability scanner and proxy for testing web apps
+kali: sqlmap - Automated SQL injection and database takeover tool
+kali: nikto - Web server vulnerability scanner
+kali: john - John the Ripper, fast password cracker
+kali: aircrack-ng - Suite of Wi-Fi network security tools
+kali: metasploit - Advanced penetration testing framework
+kali: dnsenum - Perl script for DNS enumeration
+kali: dirb - Web content scanner to find hidden directories/files
+kali: netcat - Swiss-army knife for networking (port scanning, backdoors, etc.)
+kali: wireshark - GUI packet analyzer for network traffic inspection
+kali: tcpdump - CLI-based network packet sniffer
+
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt - Basic directory brute-force
+ffuf: ffuf -u http://example.com/admin/FUZZ -w admin_panels.txt - Brute-force admin paths
+ffuf: ffuf -u http://example.com/page.php?file=FUZZ -w wordlist.txt - Parameter fuzzing
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -mc 200 - Filter only 200 OK responses
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -fc 403 - Filter out 403 Forbidden
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -t 50 - Increase threads to 50
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -e .php,.html,.txt - Add extensions
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -r - Follow redirects
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -o results.json -of json - Output to JSON
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -o results.html -of html - Output to HTML
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -recursion - Recursive fuzzing
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -recursion-depth 3 - Limit recursion depth
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -H "User-Agent: Mozilla" - Custom header
+ffuf: ffuf -u http://example.com/FUZZ -w common.txt -H "X-Api-Key: FUZZ" - Header fuzzing
+ffuf: ffuf -u http://example.com/login -X POST -d "user=admin&pass=FUZZ" -w passwords.txt - POST data fuzzing
+ffuf: ffuf -u http://example.com/search.php?q=FUZZ -w wordlist.txt - URL parameter fuzzing
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -fs 4242 - Filter by response size
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -fw 25 - Filter by response words
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -fl 12 - Filter by response lines
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -ac - Automatically calibrate filters
+ffuf: ffuf -request request.txt -w wordlist.txt - Use raw request file
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -maxtime 300 - Limit total scan time to 5 minutes
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -rate 100 - Throttle to 100 requests/sec
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -mc all - Show all status codes
+ffuf: ffuf -u http://example.com/FUZZ -w wordlist.txt -p 0.1 - Add 100ms delay between requests
+
+medusa: medusa -h - Show help and supported modules
+medusa: medusa -u admin -p password -h 192.168.1.100 -M ssh - Basic SSH brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M ssh - SSH brute-force with user and pass files
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M ftp - FTP brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M telnet - Telnet brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M rdp - RDP brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M vnc - VNC brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M smbnt - SMB brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M mysql - MySQL brute-force
+medusa: medusa -U users.txt -P passwords.txt -h 192.168.1.100 -M postgres - PostgreSQL
+
 location of kali php and other shells /usr/share/webshells
 ln -s /home/loki/tools/autorecon/AutoRecon/autorecon.py /usr/bin/autorecon = create shortcut so it's in path
 ln -s /home/gmiller/software/lynx /usr/bin/lynx
 ln -s /home/loki/sitrep /usr/bin/sitrep
+# Connect to a device over TCP/IP
+adb connect <device_ip>:5555
+# Disconnect from a device
+adb disconnect <device_ip>:5555
+# List connected devices
+adb devices
+# Start a shell on the device
+adb shell
+# Push a file to the device
+adb push <local_file> <remote_path>
+# Pull a file from the device
+adb pull <remote_file> <local_path>
+# Reboot the device
+adb reboot
+# Install an APK
+adb install <apk_file>
+# Uninstall an app
+adb uninstall <package_name>
+# Copy file using shell
+adb shell cp <source> <destination>
+# Remove a file on the device
+adb shell rm <file_path>
+# Remount file system as read-write
+adb remount
+# Logcat (view device logs)
+adb logcat
+# Restart adb server
+adb kill-server
+adb start-server
+#lists all the commands we can use on adb.
+adb 
+#lists the emulators currently active on the computer.
+adb devices 
+#lists all application packages. 
+adb shell pm list packages 
+#extract the apk file from the emulator to the computer
+##find target application
+adb shell pm list packages | grep exampleApp 
+##get the full path name of the APK file for the desired package
+adb shell pm path com.exampleApp
+##get apk to the computer
+adb pull /data/app/com.exampleApp/base.apk /<target directory on computer>
+#install the apk on emulator
+adb install example.apk 
+#connect&run commands on multiple emulator
+adb -s IP:PORT <command>
+
+sgpt switches:
+sgpt --repl    Start an interactive REPL (Read-Eval-Print Loop) chatbot mode. Useful for ongoing conversations.            
+sgpt --shell   Generate shell commands based on the prompt. Outputs raw shell commands.                                    
+sgpt --code    Generate code (any language) based on your prompt. Outputs raw code.                                        
+sgpt --chat    Use conversation mode to maintain context across multiple messages (better in interactive chat scenarios).  
+sgpt --explain Explain the command or code that you provide.                                                               
+sgpt --python  Generate Python code only (forces code completion to Python language).                                      
+sgpt --execute     Executes the generated shell command automatically. Use with caution.
+sgpt --no-cache    Disable caching of responses.                                        
+sgpt --debug       Enable verbose/debug mode — see the raw API calls, tokens used, etc. 
+sgpt --model MODEL_NAME   Specify which OpenAI model to use (e.g.  gpt-4o ,  gpt-4 ,  gpt-3.5-turbo ).  
+sgpt --temperature        Set randomness/creativity of output (0-2; lower = more deterministic).        
+sgpt --top-p              Nucleus sampling parameter for controlling diversity.                         
+sgpt --input FILE    Read the prompt from a file.                   
+sgpt --output FILE   Save the response to a file.                   
+sgpt --copy          Automatically copy the response to clipboard.  
+sgpt --explain "iptables -A INPUT -p tcp --dport 22 -j ACCEPT"
+
+sgpt "Generate an nmap command to scan for live hosts on 192.168.1.0/24"
+sgpt "Give me the ss or netstat command to show all listening ports and services on this Linux machine"
+sgpt "What command shows the ARP cache of this machine?"
+sgpt "Write the ps command to show top 10 processes using the most memory"
+sgpt "What is the Linux command to list all currently logged in users?"
+sgpt "Generate an nmap command to perform a TCP connect scan on host 192.168.1.100 for top 100 ports"
+sgpt "What command can I run to see the DNS servers my Linux system is using?"
+sgpt "Give me the ip command to display this machine’s IP address and default gateway"
+sgpt "Generate an nmap command to scan 192.168.1.0/24 for hosts with ports 80 or 443 open"
+sgpt "What is the command to list all installed packages on Ubuntu Linux?"
+sgpt "Generate an nmap command to find open SMB shares on host 192.168.1.55"
+sgpt "Give me the Linux command to show system uptime and load averages"
+sgpt "Write the find command to locate files over 100MB starting from /"
+sgpt "What is the command to list firewall rules using iptables or nftables?"
+sgpt "Generate a dig command to attempt a DNS zone transfer for domain example.com"
+sgpt "What command can I use to list active network connections?"
+sgpt "Generate an nmap command to find SSH servers on 192.168.1.0/24"
+sgpt "Give me the command to list all cron jobs for all users on Linux"
+sgpt "What command can I use to find failed login attempts in Linux system logs?"
+sgpt "Generate an nmap command to perform OS detection on 192.168.1.100"
+sgpt --code "Write a bash script to back up /etc to /backup/etc with timestamp"
+sgpt --shell "Find all open ports on 192.168.1.0/24"
+sgpt --repl --model gpt-4o
+sgpt --repl --model gpt-4o # Then inside repl: "Give me ideas for network recon tools"
+sgpt --temperature 1.0 "Generate creative banner messages for a login MOTD"
+sgpt --repl --model gpt-4o # Then type: "Pretend you're a Linux sysadmin. Help me monitor this server."
+sgpt --code "Write a cron job to run /usr/local/bin/recon.sh every Sunday at 2AM"
+sgpt --shell "Generate iptables rules to allow only HTTP/HTTPS inbound and block everything else"
+sgpt --chat "Explain the difference between ARP poisoning and DNS spoofing"
+sgpt --code "Write a simple Python script to scan a target host for open ports"
+sgpt "Here's my nmap scan output: <paste>. Explain what this tells me about the target."
+sgpt --shell "Give me a bash one-liner to list all IP addresses in ARP cache"
+sgpt --temperature 0.2 "Write a precise bash command to sync two folders"
+sgpt --chat "Give me a checklist for auditing password security on Linux"
+sgpt --repl --model gpt-4o # Then interactively ask "How do I scan for vulnerable SMB shares?"
+sgpt "Compare nmap vs masscan for network discovery"
+sgpt --code "Write a bash script that asks user for subnet and runs nmap on it"
+sgpt --chat "Give me a step-by-step internal penetration testing checklist"
 
 format a usb drive: #mkfs -t vfat /dev/sdb1
 format a usb drive: #mkfs -t ntfs /dev/sdb1
@@ -140,6 +316,7 @@ smbget -R smb://<ip>/anonymous like smbclient but you can download files. (or ju
 139	TCP	NetBIOS Session Service (legacy SMB)
 445	TCP	SMB over TCP (modern)
 
+ip n or ip neigh it like arp -a but has nice colors and more details. 
 ip a show dev wlan0 (replaced ifconfig) shows interface configuration
 ip a add 192.168.1.200/255.255.255.0 dev eth0 (configure ip address full mask per dev)
 ip a add 192.168.1.200/24 dev eth0 (configure ip interface with cidr)
@@ -338,6 +515,32 @@ $wpscan --update
 /16 	65536 		65534 	255.255.0.0 		256
 /16 	65536 	65534 	255.255.0.0 	256
 166. irssi -n clams -c irc.aol.com
+irssi: /server <hostname> - Connect to a server (e.g., /server irc.libera.chat)
+irssi: /connect <hostname> - Alias of /server
+irssi: /disconnect - Disconnect from current IRC server
+irssi: /quit [message] - Quit IRC with optional message
+irssi: /msg NickServ IDENTIFY <your_password> - Identify yourself to NickServ
+irssi: /msg NickServ REGISTER <password> <email> - Register your nickname
+irssi: /join #channel - Join a channel
+irssi: /part [#channel] [message] - Leave a channel
+irssi: /topic <new topic> - Set the topic (if you have permission)
+irssi: /names - List users in the current channel
+irssi: <Enter> - Sends your message
+irssi: /msg <nick> <message> - Send private message
+irssi: /me <action> - Emote (e.g., /me waves)
+irssi: /notice <nick> <message> - Send a notice to user
+irssi: /nick <newnick> - Change your nickname
+irssi: /whois <nick> - Info about a user
+irssi: /whowas <nick> - Info on recently disconnected user
+irssi: /kick <nick> [reason] - Kick user (if you're op)
+irssi: /ban <nick> - Ban user (if you're op)
+irssi: /window list - List all open windows
+irssi: /window goto <#> - Go to a specific window
+irssi: Alt + # - Switch windows (Alt+2 for window 2)
+irssi: /close - Close the current window
+irssi: /set autolog on - Enable automatic logging
+irssi: /set nick <nickname> - Set default nickname
+irssi: /save - Save your current configuration
 167. rdesktop is a linux term service client for win term servers
 168. Clams: ever tried man iptables-save? or man iptables-restore?
 169. Dynamic DNS folks. www.ods.org, www.dnsq.org and www.no-ip.or
@@ -719,6 +922,11 @@ apt-get install snmp snmp-mibs-downloader wget https://raw.githubusercontent.com
 apt-get install steghide
 apt-get install stegosuite
 	#apt-get udpate (Do this regularly anyway)
+steghide extract -sf image.jpg -P rockyou.txt
+binwalk -e image.jpg        # Extract embedded files steg
+stegseek image.jpg wordlist.txt  # Cracks .jpg/.bmp steghide fast
+zsteg image.png              # For PNG LSB-based steg
+
 apt-get update
 apt-get update  
 apt-get update && apt-get install pure-ftpd
@@ -1789,6 +1997,23 @@ http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 http://www.virus.org/default-password/
 -h: Use SHODAN database to query discovered hosts.
 Hydra
+hydra -l admin -P /usr/share/wordlists/rockyou.txt ftp://10.10.1.5
+hydra -L users.txt -P passwords.txt ssh://192.168.1.100 -t 4 -V
+hydra -l root -P /home/loki/passes/rockyou.txt -u -e ns target.com http-get /admin
+hydra -L usernames.txt -P passwords.txt -e s -s 3306 192.168.1.50 mysql
+hydra -l admin -P /home/loki/passes/rockyou.txt -e s -u 192.168.1.150 rdp
+hydra -L users.txt -P /home/loki/passes/rockyou.txt -u -e ns 192.168.1.75 smtp
+hydra -l root -P /home/loki/passes/rockyou.txt -u -e s 192.168.1.25 vnc -s 5901
+hydra -l admin -P /usr/share/wordlists/rockyou.txt ftp://10.10.1.5
+hydra -L users.txt -P passwords.txt ssh://192.168.1.100 -t 4 -V
+hydra -l root -P /home/loki/passes/rockyou.txt -u -e ns target.com http-get /admin
+hydra -L usernames.txt -P passwords.txt -e s -s 3306 192.168.1.50 mysql
+hydra -l admin -P /home/loki/passes/rockyou.txt -e s -u 192.168.1.150 rdp
+hydra -L users.txt -P /home/loki/passes/rockyou.txt -u -e ns 192.168.1.75 smtp
+hydra -l root -P /home/loki/passes/rockyou.txt -u -e s 192.168.1.25 vnc -s 5901
+hydra -L users.txt -P passwords.txt -u -e s 192.168.1.60 smb
+hydra -L users.txt -P passwords.txt -u -e s 192.168.1.80 telnet
+hydra -L users.txt -P passwords.txt -u -e s 192.168.1.90 pop3
 hydra $ip -s 22 ssh -l <user> -P big_wordlist.txt
 hydra attack http get 401 login with a dictionary
 Hydra attack http get 401 login with a dictionary
@@ -1819,18 +2044,8 @@ hydra -l username -P /usr/share/wordlists/rockyou.txt 1.2.3.4 http-post-form
 hydra -l <username> -P /usr/share/wordlists/<wordlist> 1.2.3.4 http-post-form
 hydra -l user -P passlist.txt ftp://192.168.0.1
 hydra -L ./webapp.txt -P ./webapp.txt $ip http-get /admin
-hydra POP3 Brute Force
-Hydra POP3 Brute Force
 hydra -P password-file.txt -v $ip snmp
 hydra -P /usr/share/wordlistsnmap.lst $ip smtp -V
-hydra SMTP Brute Force
-Hydra SMTP Brute Force
-hydra SSH Against Known username on port 22
-Hydra SSH Against Known username on port 22
-hydra SSH using a known password and a username list
-Hydra SSH using a known password and a username list
-hydra SSH using list of users and passwords
-Hydra SSH using list of users and passwords
 hydra -t 1 -l admin -P /usr/share/wordlists/rockyou.txt -vV $ip ftp
 hydra -t 1 -V -f -l administrator -P /usr/share/wordlists/rockyou.txt $ip smb
 hydra -t 1 -V -f -l administrator -P /usr/share/wordlists/rockyou.txt rdp://$ip
@@ -2521,6 +2736,7 @@ NFS (Network File System) Enumeration
 - NFS - Network File System: Like SMB but doesn't interoperate with SMB. Preferred with Linux 2 Linux servers. 
 # nice -10 gnome-terminal
 	- Nice, replaced all instances of networkIQ.net with madlinux.com in a file, dumped it to another file.
+wapiti -u http://target/dvwa - web app pen testing
 Nikto
 nikto -h $ip
 nikto -h 192.168.1.14
